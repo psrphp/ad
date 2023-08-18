@@ -37,7 +37,7 @@ class Update extends Common
                     (new Hidden('id', $item['id'])),
                     (new Switchs('类型', 'type', $item['type']))->addSwitch(
                         (new SwitchItem('图片', 'image'))->addItem(
-                            (new Cover('图片', 'data[image]', $data['image'] ?? '', $router->build('/psrphp/admin/tool/upload'))),
+                            (new Cover('图片', 'data[img]', $data['img'] ?? '', $router->build('/psrphp/admin/tool/upload'))),
                             (new Input('链接地址', 'data[url]', $data['url'] ?? ''))
                         ),
                         (new SwitchItem('代码', 'code'))->addItem(

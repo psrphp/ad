@@ -24,7 +24,7 @@ class Ad
                 $data = json_decode($item['data'], true);
                 switch ($item['type']) {
                     case 'image':
-                        return '<a href="' . $data['url'] . '" target="_blank"><img src="' . $data['image'] . '"></a>';
+                        return '<a href="' . $data['url'] . '" target="_blank"><img src="' . $data['img'] . '"></a>';
                         break;
 
                     case 'code':

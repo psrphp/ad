@@ -37,7 +37,7 @@ class Create extends Common
                     (new Hidden('billboard_id', $billboard['id'])),
                     (new Switchs('类型', 'type', 'code'))->addSwitch(
                         (new SwitchItem('图片', 'image'))->addItem(
-                            (new Cover('图片', 'img', null, $router->build('/psrphp/admin/tool/upload'))),
+                            (new Cover('图片', 'data[img]', null, $router->build('/psrphp/admin/tool/upload'))),
                             (new Input('链接地址', 'data[url]', null)),
                         ),
                         (new SwitchItem('代码', 'code'))->addItem(
