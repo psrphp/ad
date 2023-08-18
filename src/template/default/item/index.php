@@ -24,12 +24,8 @@
                 {$vo.tips}
             </td>
             <td>
-                {if $vo['type']}
                 <a href="{:$router->build('/psrphp/ad/item/update', ['id'=>$vo['id']])}">编辑</a>
-                {/if}
-                {if !$vo['system']}
                 <a href="{:$router->build('/psrphp/ad/item/delete', ['id'=>$vo['id']])}" onclick="return confirm('确定删除吗？删除后不可恢复！');">删除</a>
-                {/if}
             </td>
         </tr>
         {/foreach}
