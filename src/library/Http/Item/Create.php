@@ -35,10 +35,10 @@ class Create extends Common
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
                     (new Hidden('billboard_id', $billboard['id'])),
-                    (new Switchs('类型', 'type', null))->addSwitch(
+                    (new Switchs('类型', 'type', 'code'))->addSwitch(
                         (new SwitchItem('图片', 'image'))->addItem(
                             (new Cover('图片', 'img', null, $router->build('/psrphp/admin/tool/upload'))),
-                            (new Input('链接地址', 'data[link]', null)),
+                            (new Input('链接地址', 'data[url]', null)),
                         ),
                         (new SwitchItem('代码', 'code'))->addItem(
                             (new Code('代码', 'data[code]'))
