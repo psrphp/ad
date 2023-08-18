@@ -16,6 +16,7 @@ use PsrPHP\Form\Field\Code;
 use PsrPHP\Form\Field\Cover;
 use PsrPHP\Form\Field\Hidden;
 use PsrPHP\Form\Field\Input;
+use PsrPHP\Form\Field\Radio;
 use PsrPHP\Request\Request;
 use PsrPHP\Router\Router;
 
@@ -42,9 +43,16 @@ class Create extends Common
                         ),
                         (new SwitchItem('代码', 'code'))->addItem(
                             (new Code('代码', 'data[code]'))
-                        )
+                        ),
+                        (new SwitchItem('模板', 'tpl'))->addItem(
+                            (new Code('模板', 'data[tpl]'))
+                        ),
                     ),
                     (new Input('备注', 'tips')),
+                    (new Radio('是否发布', 'state', 0, [
+                        '0' => '否',
+                        '1' => '是',
+                    ]))
                 )
             )
         );
@@ -64,6 +72,7 @@ class Create extends Common
             'type' => $request->post('type'),
             'data' => json_encode($request->post('data', []), JSON_UNESCAPED_UNICODE),
             'tips' => $request->post('tips'),
+            'state' => $request->post('state'),
         ]);
 
         return Response::success('操作成功！');
