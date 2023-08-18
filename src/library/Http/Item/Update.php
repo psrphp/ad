@@ -29,7 +29,7 @@ class Update extends Common
         $item = $db->get('psrphp_ad_item', '*', [
             'id' => $request->get('id'),
         ]);
-        $data = json_decode($item['extra'], true);
+        $data = json_decode($item['data'], true);
         $form = new Builder('编辑广告');
         $form->addItem(
             (new Row())->addCol(

@@ -63,6 +63,7 @@ class Create extends Common
             'billboard_id' => $billboard['id'],
             'type' => $request->post('type'),
             'data' => json_encode($request->post('data', []), JSON_UNESCAPED_UNICODE),
+            'tips' => $request->post('tips'),
         ]);
 
         return Response::success('操作成功！');
