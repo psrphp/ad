@@ -29,7 +29,7 @@
                 <?php $data = json_decode($vo['data'], true); ?>
                 {switch $vo['type']}
                 {case 'image'}
-                <img src="{$data['img']??''}" alt="">
+                <img src="{$data['img']??''}" alt="" width="100">
                 <div>{$data['url']??''}</div>
                 {/case}
                 {case 'code'}
