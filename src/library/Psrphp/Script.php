@@ -34,6 +34,7 @@ CREATE TABLE `prefix_psrphp_ad_item` (
     `state` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否发布',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='广告';
+DROP TABLE IF EXISTS `prefix_psrphp_ad_click`;
 CREATE TABLE `prefix_psrphp_ad_click` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
     `item_id` int(10) unsigned NOT NULL COMMENT '广告id',
