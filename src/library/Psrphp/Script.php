@@ -53,6 +53,7 @@ str;
         $sql = <<<'str'
 DROP TABLE IF EXISTS `prefix_psrphp_ad_billboard`;
 DROP TABLE IF EXISTS `prefix_psrphp_ad_item`;
+DROP TABLE IF EXISTS `prefix_psrphp_ad_click`;
 str;
         FrameworkScript::execSql($sql);
     }
