@@ -10,13 +10,12 @@ use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
 use PsrPHP\Form\Component\Col;
 use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Component\SwitchItem;
-use PsrPHP\Form\Component\Switchs;
 use PsrPHP\Form\Field\Code;
 use PsrPHP\Form\Field\Cover;
 use PsrPHP\Form\Field\Hidden;
 use PsrPHP\Form\Field\Input;
 use PsrPHP\Form\Field\Radio;
+use PsrPHP\Form\Field\Summernote;
 use PsrPHP\Request\Request;
 use PsrPHP\Router\Router;
 
@@ -36,23 +35,32 @@ class Create extends Common
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
                     (new Hidden('billboard_id', $billboard['id'])),
-                    (new Switchs('类型', 'type', 'code'))->addSwitch(
-                        (new SwitchItem('图片', 'image'))->addItem(
-                            (new Cover('图片', 'data[img]', null, $router->build('/psrphp/admin/tool/upload'))),
-                            (new Input('链接地址', 'data[url]', null)),
-                        ),
-                        (new SwitchItem('代码', 'code'))->addItem(
-                            (new Code('代码', 'data[code]'))
-                        ),
-                        (new SwitchItem('模板', 'tpl'))->addItem(
-                            (new Code('模板', 'data[tpl]'))
-                        ),
-                    ),
-                    (new Input('备注', 'tips')),
-                    (new Radio('是否发布', 'state', 0, [
-                        '0' => '否',
-                        '1' => '是',
-                    ]))
+                    ...(function () use ($request, $router): array {
+                        $res = [];
+                        switch ($request->get('type')) {
+                            case 'image':
+                                $res[] = (new Cover('图片', 'data[img]', null, $router->build('/psrphp/admin/tool/upload')));
+                                $res[] = (new Input('链接地址', 'data[url]', null));
+                                break;
+                            case 'WYSIWYG':
+                                $res[] = (new Summernote('内容', 'data[content]', null, $router->build('/psrphp/admin/tool/upload')));
+                                break;
+                            case 'html':
+                                $res[] = (new Code('HTML代码', 'data[html]'));
+                                break;
+                            case 'tpl':
+                                $res[] = (new Code('模板', 'data[tpl]'))->set('help', '预设广告牌{$billboard}、广告{$item}变量');
+                                break;
+                            default:
+                                break;
+                        }
+                        $res[] = (new Input('备注', 'tips'));
+                        $res[] = (new Radio('是否发布', 'state', 1, [
+                            '0' => '否',
+                            '1' => '是',
+                        ]));
+                        return $res;
+                    })(),
                 )
             )
         );

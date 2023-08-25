@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Psrphp\Ad\Psrphp;
 
 use App\Psrphp\Ad\Http\Billboard\Index;
+use App\Psrphp\Ad\Http\Web\Adgo;
 use App\Psrphp\Admin\Model\MenuProvider;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use PsrPHP\Framework\Framework;
 use PsrPHP\Psr11\Container;
+use PsrPHP\Router\Router;
 use PsrPHP\Template\Template;
 
 class ListenerProvider implements ListenerProviderInterface
@@ -33,6 +35,21 @@ class ListenerProvider implements ListenerProviderInterface
                 ]);
             };
         }
+
+        if (is_a($event, Router::class)) {
+            yield function () use ($event) {
+                Framework::execute(function (
+                    Router $router,
+                ) {
+                    $router->addGroup($router->getSiteRoot(), function (Router $router) {
+                        $router->addRoute(['GET'], '/adgo', Adgo::class, [], [], '/psrphp/ad/web/adgo');
+                    });
+                }, [
+                    Router::class => $event
+                ]);
+            };
+        }
+
         if (is_a($event, MenuProvider::class)) {
             yield function () use ($event) {
                 Framework::execute(function (
