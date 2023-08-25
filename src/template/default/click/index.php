@@ -1,7 +1,7 @@
 {include common/header@psrphp/admin}
 <h1>点击记录</h1>
 
-<form action="{:$router->build('/psrphp/page/index')}" method="GET">
+<form method="GET">
     <input type="hidden" name="page" value="1">
     <input type="search" name="item_id" value="{:$request->get('item_id')}" placeholder="请输入广告id" onchange="event.target.form.submit();">
 </form>

@@ -8,6 +8,7 @@ use Medoo\Medoo;
 use Psr\Log\LoggerInterface;
 use PsrPHP\Database\Db;
 use PsrPHP\Framework\Framework;
+use PsrPHP\Router\Router;
 use PsrPHP\Template\Template;
 use Throwable;
 
@@ -34,7 +35,7 @@ class Ad
                     $item = $items[0];
                     $res = self::renderItem($item);
                     if ($res != self::$errhtml) {
-                        $db->update('psrphp_ad_time', [
+                        $db->update('psrphp_ad_item', [
                             'showtimes[+]' => 1,
                         ], [
                             'id' => $item['id'],
@@ -54,6 +55,7 @@ class Ad
     {
         return Framework::execute(function (
             Db $db,
+            Router $router,
             Template $template,
             LoggerInterface $logger,
         ) use ($item, $billboard): string {
@@ -62,7 +64,7 @@ class Ad
                 switch ($item['type']) {
                     case 'image':
                         if (isset($data['url']) && !is_null($data['url']) && strlen($data['url'])) {
-                            return '<a href="' . ($data['url'] ?? '') . '" target="_blank"><img src="' . ($data['img'] ?? '') . '"></a>';
+                            return '<a href="' . $router->build('/psrphp/ad/web/adgo', ['id' => $item['id']]) . '" target="_blank"><img src="' . ($data['img'] ?? '') . '"></a>';
                         } else {
                             return '<img src="' . ($data['img'] ?? '') . '">';
                         }

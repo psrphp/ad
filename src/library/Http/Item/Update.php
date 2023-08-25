@@ -41,6 +41,12 @@ class Update extends Common
                             case 'image':
                                 $res[] = (new Cover('图片', 'data[img]', $data['img'] ?? '', $router->build('/psrphp/admin/tool/upload')));
                                 $res[] = (new Input('链接地址', 'data[url]', $data['url'] ?? ''));
+                                $res[] = (new Input('最大点击量', 'max_click', 500000))
+                                    ->set('type', 'number')
+                                    ->set('step', 1)
+                                    ->set('max', 9999999999)
+                                    ->set('min', 0)
+                                    ->set('help', '超过最大点击量会停止展示该广告');
                                 break;
                             case 'WYSIWYG':
                                 $res[] = (new Summernote('内容', 'data[content]', $data['content'] ?? '', $router->build('/psrphp/admin/tool/upload')));
@@ -54,6 +60,18 @@ class Update extends Common
                             default:
                                 break;
                         }
+                        $res[] = (new Input('最大展示量', 'max_showtimes', $item['max_showtimes']))
+                            ->set('type', 'number')
+                            ->set('step', 1)
+                            ->set('max', 9999999999)
+                            ->set('min', 0)
+                            ->set('help', '超过最大展示量会停止展示该广告');
+                        $res[] = (new Input('开始展示时间', 'starttime', $item['starttime']))
+                            ->set('type', 'datetime-local')
+                            ->set('help', '在开始时间和截至时间之内的广告才会展示');
+                        $res[] = (new Input('截止展示时间', 'endtime', $item['endtime']))
+                            ->set('type', 'datetime-local')
+                            ->set('help', '在开始时间和截至时间之内的广告才会展示');
                         $res[] = (new Input('备注', 'tips', $item['tips']));
                         $res[] = (new Radio('是否发布', 'state', $item['state'], [
                             '0' => '否',
@@ -76,6 +94,10 @@ class Update extends Common
         ]);
         $db->update('psrphp_ad_item', [
             'data' => json_encode($request->post('data', []), JSON_UNESCAPED_UNICODE),
+            'max_showtimes' => $request->post('max_showtimes', 99999999),
+            'max_click' => $request->post('max_click', 99999999),
+            'starttime' => $request->post('starttime'),
+            'endtime' => $request->post('endtime'),
             'tips' => $request->post('tips'),
             'state' => $request->post('state'),
         ], [

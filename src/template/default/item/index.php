@@ -14,6 +14,12 @@
         <tr>
             <th>ID</th>
             <th>类型</th>
+            <th>最大展现量</th>
+            <th>展现量</th>
+            <th>最大点击量</th>
+            <th>点击量</th>
+            <th>开始展示时间</th>
+            <th>截止展示时间</th>
             <th>备注</th>
             <th>状态</th>
             <th>管理</th>
@@ -23,12 +29,26 @@
         {foreach $items as $vo}
         <tr>
             <td>{$vo.id}</td>
+            <td>{$vo.type}</td>
+            <td>{$vo.max_showtimes}</td>
+            <td>{$vo.showtimes}</td>
             <td>
-                {$vo.type}
+                {if $vo['type'] == 'image'}
+                <span>{$vo.max_click}</span>
+                {else}
+                <span>-</span>
+                {/if}
             </td>
             <td>
-                {$vo.tips}
+                {if $vo['type'] == 'image'}
+                <a href="{echo $router->build('/psrphp/ad/click/index', ['item_id'=>$vo['id']])}">{$vo.click}</a>
+                {else}
+                <span>-</span>
+                {/if}
             </td>
+            <td>{$vo.starttime}</td>
+            <td>{$vo.endtime}</td>
+            <td>{$vo.tips}</td>
             <td>
                 {if $vo['state'] == 1}
                 <span>已发布</span>
@@ -43,7 +63,7 @@
             </td>
         </tr>
         <tr style="display: none;">
-            <td colspan="5">
+            <td colspan="11">
                 {echo \App\Psrphp\Ad\Model\Ad::renderItem($vo, $billboard)}
             </td>
         </tr>
