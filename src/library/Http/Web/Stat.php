@@ -52,7 +52,6 @@ class Stat implements RequestHandlerInterface
                 'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
                 'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
                 'referer' => $_SERVER['HTTP_REFERER'] ?? '',
-                'url' => '',
                 'time' => date('Y-m-d H:i:s'),
             ]);
         }
