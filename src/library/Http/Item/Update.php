@@ -42,12 +42,6 @@ class Update extends Common
                             case 'image':
                                 $res[] = (new Cover('图片', 'data[img]', $data['img'] ?? '', $router->build('/psrphp/admin/tool/upload')));
                                 $res[] = (new Input('链接地址', 'data[url]', $data['url'] ?? ''));
-                                $res[] = (new Input('最大点击量', 'max_click', 500000))
-                                    ->set('type', 'number')
-                                    ->set('step', 1)
-                                    ->set('max', 9999999999)
-                                    ->set('min', 0)
-                                    ->set('help', '超过最大点击量会停止展示该广告');
                                 break;
                             case 'WYSIWYG':
                                 $res[] = (new Summernote('内容', 'data[content]', $data['content'] ?? '', $router->build('/psrphp/admin/tool/upload')));
@@ -67,6 +61,12 @@ class Update extends Common
                             ->set('max', 9999999999)
                             ->set('min', 0)
                             ->set('help', '超过最大展示量会停止展示该广告');
+                        $res[] = (new Input('最大点击量', 'max_click', 500000))
+                            ->set('type', 'number')
+                            ->set('step', 1)
+                            ->set('max', 9999999999)
+                            ->set('min', 0)
+                            ->set('help', '超过最大点击量会停止展示该广告');
                         $res[] = (new Input('开始展示时间', 'starttime', $item['starttime']))
                             ->set('type', 'datetime-local')
                             ->set('help', '在开始时间和截至时间之内的广告才会展示');

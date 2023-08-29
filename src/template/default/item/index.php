@@ -33,13 +33,7 @@
             <td>{$vo.type}</td>
             <td>{$vo.max_showtimes}</td>
             <td>{$vo.showtimes}</td>
-            <td>
-                {if $vo['type'] == 'image'}
-                <span>{$vo.max_click}</span>
-                {else}
-                <span>-</span>
-                {/if}
-            </td>
+            <td>{$vo.max_click}</td>
             <td>
                 <a href="{echo $router->build('/psrphp/ad/click/index', ['item_id'=>$vo['id']])}">{$vo.click}</a>
             </td>
