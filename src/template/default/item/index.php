@@ -41,11 +41,7 @@
                 {/if}
             </td>
             <td>
-                {if $vo['type'] == 'image'}
                 <a href="{echo $router->build('/psrphp/ad/click/index', ['item_id'=>$vo['id']])}">{$vo.click}</a>
-                {else}
-                <span>-</span>
-                {/if}
             </td>
             <td>{$vo.starttime}</td>
             <td>{$vo.endtime}</td>

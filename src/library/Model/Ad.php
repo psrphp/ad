@@ -78,30 +78,33 @@ class Ad
         ) use ($item, $billboard): string {
             try {
                 $data = json_decode($item['data'], true);
+                $url = $router->build('/psrphp/ad/web/stat', ['id' => $item['id']]);
                 switch ($item['type']) {
                     case 'image':
                         if (isset($data['url']) && !is_null($data['url']) && strlen($data['url'])) {
-                            return '<a href="' . $router->build('/psrphp/ad/web/adgo', ['id' => $item['id']]) . '" target="_blank"><img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;"></a>';
+                            $html = '<a href="' . $router->build('/psrphp/ad/web/jump', ['id' => $item['id']]) . '" target="_blank"><img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;"></a>';
                         } else {
-                            return '<img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;">';
+                            $html = '<img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;">';
                         }
+                        return self::wrapStat($html, $url);
                         break;
 
                     case 'WYSIWYG':
-                        return $data['content'] ?? '';
+                        return self::wrapStat($data['content'] ?? '', $url);
                         break;
 
                     case 'html':
-                        return $data['html'] ?? '';
+                        return self::wrapStat($data['html'] ?? '', $url);
                         break;
 
                     case 'tpl':
-                        return $template->renderFromString($data['tpl'] ?? '', [
+                        $html = $template->renderFromString($data['tpl'] ?? '', [
                             'billboard' => $billboard ?: $db->get('psrphp_ad_billboard', '*', [
                                 'id' => $item['billboard_id'],
                             ]),
                             'item' => $item,
                         ]);
+                        return self::wrapStat($html, $url);
                         break;
 
                     default:
@@ -114,5 +117,10 @@ class Ad
                 return self::$errhtml;
             }
         });
+    }
+
+    private static function wrapStat($html, $url): string
+    {
+        return '<div onclick="var xmlhttp = new XMLHttpRequest();xmlhttp.open(\'post\', \'' . $url . '\', true);xmlhttp.send();">' . $html . '</div>';
     }
 }

@@ -13,7 +13,7 @@ use PsrPHP\Database\Db;
 use PsrPHP\Framework\Framework;
 use PsrPHP\Request\Request;
 
-class Adgo implements RequestHandlerInterface
+class Jump implements RequestHandlerInterface
 {
     public function handle(
         ServerRequestInterface $request
@@ -46,20 +46,6 @@ class Adgo implements RequestHandlerInterface
 
         $data = json_decode($item['data'], true);
         if (isset($data['url']) && is_string($data['url']) && strlen($data['url'])) {
-            $db->update('psrphp_ad_item', [
-                'click[+]' => 1,
-            ], [
-                'id' => $item['id']
-            ]);
-
-            $db->insert('psrphp_ad_click', [
-                'item_id' => $item['id'],
-                'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
-                'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
-                'referer' => $_SERVER['HTTP_REFERER'] ?? '',
-                'url' => $data['url'],
-                'time' => date('Y-m-d H:i:s'),
-            ]);
             return Response::redirect($data['url']);
         } else {
             return Response::error('页面不存在');

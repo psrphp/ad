@@ -14,7 +14,6 @@
             <th>访客IP</th>
             <th>USER_AGENT</th>
             <th>REFERER</th>
-            <th>跳转地址</th>
             <th>点击时间</th>
         </tr>
     </thead>
@@ -22,11 +21,15 @@
         {foreach $clicks as $vo}
         <tr>
             <td>{$vo.id}</td>
-            <td>{$vo.item_id}</td>
+            <td>
+                <span>id:{$vo['item_id']}</span>
+                {if $vo['item']}
+                <span>{$vo['item']['title']}</span>
+                {/if}
+            </td>
             <td>{$vo.ip}</td>
             <td>{$vo.user_agent}</td>
             <td>{$vo.referer}</td>
-            <td>{$vo.url}</td>
             <td>{$vo.time}</td>
         </tr>
         {/foreach}

@@ -49,7 +49,6 @@ CREATE TABLE `prefix_psrphp_ad_click` (
     `ip` varchar(255) COMMENT 'IP',
     `user_agent` varchar(255) COMMENT 'user agent',
     `referer` varchar(255) COMMENT 'http referer',
-    `url` varchar(255) COMMENT '跳转地址',
     `time` datetime COMMENT '点击时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='点击记录';

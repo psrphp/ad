@@ -32,6 +32,12 @@ class Index extends Common
 
         $clicks = $db->select('psrphp_ad_click', '*', $where);
 
+        foreach ($clicks as &$vo) {
+            $vo['item'] = $db->get('psrphp_ad_item', '*', [
+                'id' => $vo['item_id'],
+            ]);
+        }
+
         return $template->renderFromFile('click/index@psrphp/ad', [
             'clicks' => $clicks,
             'maxpage' => ceil($total / $size) ?: 1

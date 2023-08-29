@@ -7,7 +7,7 @@ namespace App\Psrphp\Ad\Psrphp;
 use App\Psrphp\Ad\Http\Billboard\Index;
 use App\Psrphp\Ad\Http\Click\Index as ClickIndex;
 use App\Psrphp\Ad\Http\Stat\Index as StatIndex;
-use App\Psrphp\Ad\Http\Web\Adgo;
+use App\Psrphp\Ad\Http\Web\Jump;
 use App\Psrphp\Admin\Model\MenuProvider;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use PsrPHP\Framework\Framework;
@@ -44,7 +44,7 @@ class ListenerProvider implements ListenerProviderInterface
                     Router $router,
                 ) {
                     $router->addGroup($router->getSiteRoot(), function (Router $router) {
-                        $router->addRoute(['GET'], '/adgo', Adgo::class, [], [], '/psrphp/ad/web/adgo');
+                        $router->addRoute(['GET'], '/jump', Jump::class, [], [], '/psrphp/ad/web/jump');
                     });
                 }, [
                     Router::class => $event
