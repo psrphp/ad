@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `prefix_psrphp_ad_billboard`;
 CREATE TABLE `prefix_psrphp_ad_billboard` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
     `name` varchar(255) NOT NULL COMMENT '名称',
-    `tips` varchar(255) COMMENT '备注',
+    `title` varchar(255) COMMENT '标题',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='广告位';
 DROP TABLE IF EXISTS `prefix_psrphp_ad_item`;

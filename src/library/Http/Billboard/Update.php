@@ -28,7 +28,7 @@ class Update extends Common
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $billboard['id'])),
-                    (new Input('备注', 'tips', $billboard['tips'])),
+                    (new Input('标题', 'title', $billboard['title']))->set('required', 'required'),
                 )
             )
         );
@@ -43,7 +43,7 @@ class Update extends Common
             'id' => $request->post('id'),
         ]);
         $db->update('psrphp_ad_billboard', [
-            'tips' => $request->post('tips'),
+            'title' => $request->post('title'),
         ], [
             'id' => $billboard['id'],
         ]);

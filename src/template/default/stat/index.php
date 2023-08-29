@@ -6,7 +6,7 @@
     <select name="item_id" onchange="this.form.submit()">
         <option value="">请选择</option>
         {foreach $billboards as $vo}
-        <optgroup label="{$vo.tips}">
+        <optgroup label="{$vo.title}">
             {foreach $items as $sub}
             {if $sub['billboard_id'] == $vo['id']}
             {if $sub['id'] == $request->get('item_id')}

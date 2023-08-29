@@ -10,7 +10,7 @@
     <thead>
         <tr>
             <th>名称</th>
-            <th>备注</th>
+            <th>标题</th>
             <th>管理</th>
             <th>调用</th>
         </tr>
@@ -22,7 +22,7 @@
                 {$vo.name}
             </td>
             <td>
-                {$vo.tips}
+                {$vo.title}
             </td>
             <td>
                 <a href="{:$router->build('/psrphp/ad/billboard/update', ['id'=>$vo['id']])}">编辑</a>

@@ -22,7 +22,7 @@ class Create extends Common
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
                     (new Input('名称', 'name'))->set('help', '名称只能由字母开头，字母、数字、下划线组成，不超过20个字符'),
-                    (new Input('备注', 'tips'))
+                    (new Input('标题', 'title'))
                 )
             )
         );
@@ -47,7 +47,7 @@ class Create extends Common
 
         $db->insert('psrphp_ad_billboard', [
             'name' => $name,
-            'tips' => $request->post('tips'),
+            'title' => $request->post('title'),
         ]);
 
         return Response::success('操作成功！', null, 'javascript:history.go(-2)');
