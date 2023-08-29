@@ -49,7 +49,7 @@ class Index extends Common
             }
         }
 
-        $max = 0;
+        $max = 1;
         foreach ($datas as $value) {
             $max = max($max, $value['show'], $value['click']);
         }
