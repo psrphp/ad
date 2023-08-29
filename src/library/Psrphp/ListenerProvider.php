@@ -6,6 +6,7 @@ namespace App\Psrphp\Ad\Psrphp;
 
 use App\Psrphp\Ad\Http\Billboard\Index;
 use App\Psrphp\Ad\Http\Click\Index as ClickIndex;
+use App\Psrphp\Ad\Http\Stat\Index as StatIndex;
 use App\Psrphp\Ad\Http\Web\Adgo;
 use App\Psrphp\Admin\Model\MenuProvider;
 use Psr\EventDispatcher\ListenerProviderInterface;
@@ -58,6 +59,7 @@ class ListenerProvider implements ListenerProviderInterface
                 ) {
                     $provider->add('广告管理', Index::class);
                     $provider->add('点击记录', ClickIndex::class);
+                    $provider->add('效果统计', StatIndex::class);
                 }, [
                     MenuProvider::class => $event,
                 ]);

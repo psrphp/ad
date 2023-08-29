@@ -40,6 +40,23 @@ class Ad
                         ], [
                             'id' => $item['id'],
                         ]);
+                        if ($db->get('psrphp_ad_show', '*', [
+                            'item_id' => $item['id'],
+                            'date' => date('Y-m-d'),
+                        ])) {
+                            $db->update('psrphp_ad_show', [
+                                'times[+]' => 1,
+                            ], [
+                                'item_id' => $item['id'],
+                                'date' => date('Y-m-d'),
+                            ]);
+                        } else {
+                            $db->insert('psrphp_ad_show', [
+                                'item_id' => $item['id'],
+                                'date' => date('Y-m-d'),
+                                'times' => 1,
+                            ]);
+                        }
                     }
                     return $res;
                 } else {
@@ -64,9 +81,9 @@ class Ad
                 switch ($item['type']) {
                     case 'image':
                         if (isset($data['url']) && !is_null($data['url']) && strlen($data['url'])) {
-                            return '<a href="' . $router->build('/psrphp/ad/web/adgo', ['id' => $item['id']]) . '" target="_blank"><img src="' . ($data['img'] ?? '') . '"></a>';
+                            return '<a href="' . $router->build('/psrphp/ad/web/adgo', ['id' => $item['id']]) . '" target="_blank"><img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;"></a>';
                         } else {
-                            return '<img src="' . ($data['img'] ?? '') . '">';
+                            return '<img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;">';
                         }
                         break;
 

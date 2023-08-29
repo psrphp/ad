@@ -13,6 +13,7 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>标题</th>
             <th>类型</th>
             <th>最大展现量</th>
             <th>展现量</th>
@@ -20,7 +21,6 @@
             <th>点击量</th>
             <th>开始展示时间</th>
             <th>截止展示时间</th>
-            <th>备注</th>
             <th>状态</th>
             <th>管理</th>
         </tr>
@@ -29,6 +29,7 @@
         {foreach $items as $vo}
         <tr>
             <td>{$vo.id}</td>
+            <td>{$vo.title}</td>
             <td>{$vo.type}</td>
             <td>{$vo.max_showtimes}</td>
             <td>{$vo.showtimes}</td>
@@ -48,7 +49,6 @@
             </td>
             <td>{$vo.starttime}</td>
             <td>{$vo.endtime}</td>
-            <td>{$vo.tips}</td>
             <td>
                 {if $vo['state'] == 1}
                 <span>已发布</span>

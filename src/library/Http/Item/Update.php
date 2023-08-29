@@ -34,6 +34,7 @@ class Update extends Common
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $item['id'])),
+                    (new Input('标题', 'title', $item['title']))->set('required', 'required'),
                     ...(function () use ($router, $item): array {
                         $data = json_decode($item['data'], true);
                         $res = [];
@@ -72,7 +73,6 @@ class Update extends Common
                         $res[] = (new Input('截止展示时间', 'endtime', $item['endtime']))
                             ->set('type', 'datetime-local')
                             ->set('help', '在开始时间和截至时间之内的广告才会展示');
-                        $res[] = (new Input('备注', 'tips', $item['tips']));
                         $res[] = (new Radio('是否发布', 'state', $item['state'], [
                             '0' => '否',
                             '1' => '是',
@@ -93,12 +93,12 @@ class Update extends Common
             'id' => $request->post('id'),
         ]);
         $db->update('psrphp_ad_item', [
+            'title' => $request->post('title'),
             'data' => json_encode($request->post('data', []), JSON_UNESCAPED_UNICODE),
             'max_showtimes' => $request->post('max_showtimes', 99999999),
             'max_click' => $request->post('max_click', 99999999),
             'starttime' => $request->post('starttime'),
             'endtime' => $request->post('endtime'),
-            'tips' => $request->post('tips'),
             'state' => $request->post('state'),
         ], [
             'id' => $item['id'],
