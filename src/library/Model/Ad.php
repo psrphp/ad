@@ -20,6 +20,7 @@ class Ad
     {
         return Framework::execute(function (
             Db $db,
+            Router $router,
         ) use ($name): string {
             if ($billboard = $db->get('psrphp_ad_billboard', '*', [
                 'name' => $name,
@@ -58,7 +59,7 @@ class Ad
                             ]);
                         }
                     }
-                    return $res;
+                    return '<div onclick="var xmlhttp = new XMLHttpRequest();xmlhttp.open(\'post\', \'' . $router->build('/psrphp/ad/web/stat', ['id' => $item['id']]) . '\', true);xmlhttp.send();">' . $res . '</div>';
                 } else {
                     return '';
                 }
@@ -78,33 +79,30 @@ class Ad
         ) use ($item, $billboard): string {
             try {
                 $data = json_decode($item['data'], true);
-                $url = $router->build('/psrphp/ad/web/stat', ['id' => $item['id']]);
                 switch ($item['type']) {
                     case 'image':
                         if (isset($data['url']) && !is_null($data['url']) && strlen($data['url'])) {
-                            $html = '<a href="' . $router->build('/psrphp/ad/web/jump', ['id' => $item['id']]) . '" target="_blank"><img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;"></a>';
+                            return '<a href="' . $router->build('/psrphp/ad/web/jump', ['id' => $item['id']]) . '" target="_blank"><img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;"></a>';
                         } else {
-                            $html = '<img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;">';
+                            return '<img src="' . ($data['img'] ?? '') . '" style="max-width: 100%;">';
                         }
-                        return self::wrapStat($html, $url);
                         break;
 
                     case 'WYSIWYG':
-                        return self::wrapStat($data['content'] ?? '', $url);
+                        return $data['content'] ?? '';
                         break;
 
                     case 'html':
-                        return self::wrapStat($data['html'] ?? '', $url);
+                        return $data['html'] ?? '';
                         break;
 
                     case 'tpl':
-                        $html = $template->renderFromString($data['tpl'] ?? '', [
+                        return $template->renderFromString($data['tpl'] ?? '', [
                             'billboard' => $billboard ?: $db->get('psrphp_ad_billboard', '*', [
                                 'id' => $item['billboard_id'],
                             ]),
                             'item' => $item,
                         ]);
-                        return self::wrapStat($html, $url);
                         break;
 
                     default:
@@ -117,10 +115,5 @@ class Ad
                 return self::$errhtml;
             }
         });
-    }
-
-    private static function wrapStat($html, $url): string
-    {
-        return '<div onclick="var xmlhttp = new XMLHttpRequest();xmlhttp.open(\'post\', \'' . $url . '\', true);xmlhttp.send();">' . $html . '</div>';
     }
 }
