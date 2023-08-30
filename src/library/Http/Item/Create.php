@@ -8,14 +8,14 @@ use App\Psrphp\Admin\Http\Common;
 use App\Psrphp\Admin\Lib\Response;
 use PsrPHP\Database\Db;
 use PsrPHP\Form\Builder;
-use PsrPHP\Form\Component\Col;
-use PsrPHP\Form\Component\Row;
-use PsrPHP\Form\Field\Code;
-use PsrPHP\Form\Field\Cover;
-use PsrPHP\Form\Field\Hidden;
-use PsrPHP\Form\Field\Input;
-use PsrPHP\Form\Field\Radio;
-use PsrPHP\Form\Field\Summernote;
+use PsrPHP\Form\Col;
+use PsrPHP\Form\Row;
+use PsrPHP\Form\Code;
+use PsrPHP\Form\Cover;
+use PsrPHP\Form\Input;
+use PsrPHP\Form\Radio;
+use PsrPHP\Form\Radios;
+use PsrPHP\Form\Summernote;
 use PsrPHP\Request\Request;
 use PsrPHP\Router\Router;
 
@@ -35,15 +35,15 @@ class Create extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
-                    (new Hidden('billboard_id', $billboard['id'])),
-                    (new Hidden('type', $type)),
-                    (new Input('标题', 'title'))->set('required', 'required'),
+                    (new Input('billboard_id', 'billboard_id', $billboard['id']))->setType('hidden'),
+                    (new Input('type', 'type', $type))->setType('hidden'),
+                    (new Input('标题', 'title'))->setRequired(true),
                     ...(function () use ($type, $router): array {
                         $res = [];
                         switch ($type) {
                             case 'image':
                                 $res[] = (new Cover('图片', 'data[img]', null, $router->build('/psrphp/admin/tool/upload')));
-                                $res[] = (new Input('链接地址', 'data[url]', null));
+                                $res[] = (new Input('链接地址', 'data[url]', null))->setType('url');
                                 break;
                             case 'WYSIWYG':
                                 $res[] = (new Summernote('内容', 'data[content]', null, $router->build('/psrphp/admin/tool/upload')));
@@ -52,33 +52,33 @@ class Create extends Common
                                 $res[] = (new Code('HTML代码', 'data[html]'));
                                 break;
                             case 'tpl':
-                                $res[] = (new Code('模板', 'data[tpl]'))->set('help', '预设广告牌{$billboard}、广告{$item}变量');
+                                $res[] = (new Code('模板', 'data[tpl]'))->setHelp('预设广告牌{$billboard}、广告{$item}变量');
                                 break;
                             default:
                                 break;
                         }
                         $res[] = (new Input('最大展示量', 'max_showtimes', 500000))
-                            ->set('type', 'number')
-                            ->set('step', 1)
-                            ->set('max', 9999999999)
-                            ->set('min', 0)
-                            ->set('help', '超过最大展示量会停止展示该广告');
+                            ->setType('number')
+                            ->setStep(1)
+                            ->setMax(9999999999)
+                            ->setMin(0)
+                            ->setHelp('超过最大展示量会停止展示该广告');
                         $res[] = (new Input('最大点击量', 'max_click', 500000))
-                            ->set('type', 'number')
-                            ->set('step', 1)
-                            ->set('max', 9999999999)
-                            ->set('min', 0)
-                            ->set('help', '超过最大点击量会停止展示该广告');
+                            ->setType('number')
+                            ->setStep(1)
+                            ->setMax(9999999999)
+                            ->setMin(0)
+                            ->setHelp('超过最大点击量会停止展示该广告');
                         $res[] = (new Input('开始展示时间', 'starttime', date('Y-m-d H:i:s')))
-                            ->set('type', 'datetime-local')
-                            ->set('help', '在开始时间和截至时间之内的广告才会展示');
+                            ->setType('datetime-local')
+                            ->setHelp('在开始时间和截至时间之内的广告才会展示');
                         $res[] = (new Input('截止展示时间', 'endtime', date('Y-m-d H:i:s', time() + 86400 * 30)))
-                            ->set('type', 'datetime-local')
-                            ->set('help', '在开始时间和截至时间之内的广告才会展示');
-                        $res[] = (new Radio('是否发布', 'state', 1, [
-                            '0' => '否',
-                            '1' => '是',
-                        ]));
+                            ->setType('datetime-local')
+                            ->setHelp('在开始时间和截至时间之内的广告才会展示');
+                        $res[] = (new Radios('是否发布'))->addRadio(
+                            new Radio('否', 'state', '0', false),
+                            new Radio('是', 'state', '1', true)
+                        );
                         return $res;
                     })(),
                 )
