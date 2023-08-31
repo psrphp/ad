@@ -28,7 +28,7 @@ class Update extends Common
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $billboard['id'])),
-                    (new Input('标题', 'title', $billboard['title']))->setRequired(true),
+                    (new Input('标题', 'title', $billboard['title']))->setRequired(),
                 )
             )
         );

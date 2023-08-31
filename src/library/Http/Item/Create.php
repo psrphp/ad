@@ -38,7 +38,7 @@ class Create extends Common
                 (new Col('col-md-9'))->addItem(
                     (new Hidden('billboard_id', $billboard['id'])),
                     (new Hidden('type', $type)),
-                    (new Input('标题', 'title'))->setRequired(true),
+                    (new Input('标题', 'title'))->setRequired(),
                     ...(function () use ($type, $router): array {
                         $res = [];
                         switch ($type) {

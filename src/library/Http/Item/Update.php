@@ -35,7 +35,7 @@ class Update extends Common
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
                     (new Hidden('id', $item['id'])),
-                    (new Input('标题', 'title', $item['title']))->setRequired(true),
+                    (new Input('标题', 'title', $item['title']))->setRequired(),
                     ...(function () use ($router, $item): array {
                         $data = json_decode($item['data'], true);
                         $res = [];
