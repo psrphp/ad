@@ -13,6 +13,7 @@ use PsrPHP\Form\Row;
 use PsrPHP\Form\Code;
 use PsrPHP\Form\Cover;
 use PsrPHP\Form\Input;
+use PsrPHP\Form\Hidden;
 use PsrPHP\Form\Radio;
 use PsrPHP\Form\Radios;
 use PsrPHP\Form\Summernote;
@@ -35,8 +36,8 @@ class Create extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-9'))->addItem(
-                    (new Input('billboard_id', 'billboard_id', $billboard['id']))->setType('hidden'),
-                    (new Input('type', 'type', $type))->setType('hidden'),
+                    (new Hidden('billboard_id', $billboard['id'])),
+                    (new Hidden('type', $type)),
                     (new Input('标题', 'title'))->setRequired(true),
                     ...(function () use ($type, $router): array {
                         $res = [];

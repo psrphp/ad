@@ -13,6 +13,7 @@ use PsrPHP\Form\Row;
 use PsrPHP\Form\Code;
 use PsrPHP\Form\Cover;
 use PsrPHP\Form\Input;
+use PsrPHP\Form\Hidden;
 use PsrPHP\Form\Radio;
 use PsrPHP\Form\Radios;
 use PsrPHP\Form\Summernote;
@@ -33,7 +34,7 @@ class Update extends Common
         $form->addItem(
             (new Row())->addCol(
                 (new Col('col-md-8'))->addItem(
-                    (new Input('id', 'id', $item['id']))->setType('hidden'),
+                    (new Hidden('id', $item['id'])),
                     (new Input('标题', 'title', $item['title']))->setRequired(true),
                     ...(function () use ($router, $item): array {
                         $data = json_decode($item['data'], true);
