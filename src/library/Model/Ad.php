@@ -33,6 +33,8 @@ class Ad
                     'endtime[>]' => date('Y-m-d H:i:s'),
                     'LIMIT' => 1,
                 ])) {
+                    $date = date('Y-m-d');
+                    $hour = date('H');
                     $item = $items[0];
                     $res = self::renderItem($item);
                     if ($res != self::$errhtml) {
@@ -41,20 +43,24 @@ class Ad
                         ], [
                             'id' => $item['id'],
                         ]);
+
                         if ($db->get('psrphp_ad_show', '*', [
                             'item_id' => $item['id'],
-                            'date' => date('Y-m-d'),
+                            'date' => $date,
+                            'hour' => $hour,
                         ])) {
                             $db->update('psrphp_ad_show', [
                                 'times[+]' => 1,
                             ], [
                                 'item_id' => $item['id'],
-                                'date' => date('Y-m-d'),
+                                'date' => $date,
+                                'hour' => $hour,
                             ]);
                         } else {
                             $db->insert('psrphp_ad_show', [
                                 'item_id' => $item['id'],
-                                'date' => date('Y-m-d'),
+                                'date' => $date,
+                                'hour' => $hour,
                                 'times' => 1,
                             ]);
                         }

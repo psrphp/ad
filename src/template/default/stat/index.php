@@ -1,10 +1,26 @@
 {include common/header@psrphp/admin}
-<h1>点击记录</h1>
+<h1>数据统计</h1>
 
 <form method="GET">
-    <input type="month" name="month" value="{$request->get('month', date('Y-m'))}" onchange="this.form.submit()">
+    <select name="type" onchange="this.form.submit()">
+        {if 'date' == $type}
+        <option value="date" selected>按日</option>
+        {else}
+        <option value="date">按日</option>
+        {/if}
+        {if 'month' == $type}
+        <option value="month" selected>按月</option>
+        {else}
+        <option value="month">按月</option>
+        {/if}
+    </select>
+    {if $type=='date'}
+    <input type="date" name="date" value="{$date}" onchange="this.form.submit()">
+    {else}
+    <input type="month" name="month" value="{$month}" onchange="this.form.submit()">
+    {/if}
     <select name="item_id" onchange="this.form.submit()">
-        <option value="">请选择</option>
+        <option value="">不限</option>
         {foreach $billboards as $vo}
         <optgroup label="{$vo.title}">
             {foreach $items as $sub}
@@ -43,9 +59,24 @@
                 <div style="position: absolute;top: -20px;width: 100%;text-align: center;">{$vo.click}</div>
                 <div style="height: {:ceil($vo['click']*200/$max+1)}px;background: red;"></div>
             </div>
-            <div style="position: absolute;bottom: -20px;width: 100%;text-align: center;">{:substr($key, 8)}</div>
+            <div style="position: absolute;bottom: -20px;width: 100%;text-align: center;">{$key}</div>
         </div>
         {/foreach}
     </div>
 </div>
+
+<table style="margin-top: 20px;">
+    <tr>
+        <td>时间</td>
+        <td>展示量</td>
+        <td>点击量</td>
+    </tr>
+    {foreach $datas as $vo}
+    <tr>
+        <td>{$vo.title}</td>
+        <td>{$vo.show}</td>
+        <td>{$vo.click}</td>
+    </tr>
+    {/foreach}
+</table>
 {include common/footer@psrphp/admin}

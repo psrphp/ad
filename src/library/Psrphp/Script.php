@@ -39,6 +39,7 @@ CREATE TABLE `prefix_psrphp_ad_show` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
     `item_id` int(10) unsigned NOT NULL COMMENT '广告id',
     `date` date COMMENT '日期',
+    `hour` tinyint(3) unsigned NOT NULL COMMENT '小时',
     `times` int(10) unsigned NOT NULL COMMENT '展现量',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='点击记录';

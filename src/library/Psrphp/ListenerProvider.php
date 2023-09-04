@@ -59,7 +59,7 @@ class ListenerProvider implements ListenerProviderInterface
                 ) {
                     $provider->add('广告管理', Index::class);
                     $provider->add('点击记录', ClickIndex::class);
-                    $provider->add('效果统计', StatIndex::class);
+                    $provider->add('数据统计', StatIndex::class);
                 }, [
                     MenuProvider::class => $event,
                 ]);
