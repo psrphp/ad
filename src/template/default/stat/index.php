@@ -48,7 +48,7 @@
             <div>点击量</div>
         </div>
     </div>
-    <div style="display: flex;height: 200px;align-items: flex-end;gap: 10px;">
+    <div style="display: flex;height: 200px;align-items: flex-end;gap: 10px;margin-top: 30px;">
         {foreach $datas as $key => $vo}
         <div style="flex-grow: 1;position: relative;display: flex;align-items: flex-end;">
             <div style="position: relative;flex-grow: 1;">
