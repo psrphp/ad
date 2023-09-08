@@ -1,5 +1,5 @@
 {include common/header@psrphp/admin}
-<h1>点击记录</h1>
+<h1>广告点击记录</h1>
 
 <form method="GET">
     <input type="hidden" name="page" value="1">

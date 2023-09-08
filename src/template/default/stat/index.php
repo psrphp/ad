@@ -1,5 +1,5 @@
 {include common/header@psrphp/admin}
-<h1>数据统计</h1>
+<h1>广告统计</h1>
 
 <form method="GET">
     <select name="type" onchange="this.form.submit()">
