@@ -21,6 +21,8 @@
             <th>点击量</th>
             <th>开始展示时间</th>
             <th>截止展示时间</th>
+            <th>pc端</th>
+            <th>移动端</th>
             <th>状态</th>
             <th>管理</th>
         </tr>
@@ -40,6 +42,20 @@
             <td>{$vo.starttime}</td>
             <td>{$vo.endtime}</td>
             <td>
+                {if $vo['pc'] == 1}
+                <span>yes</span>
+                {else}
+                <span>no</span>
+                {/if}
+            </td>
+            <td>
+                {if $vo['mobile'] == 1}
+                <span>yes</span>
+                {else}
+                <span>no</span>
+                {/if}
+            </td>
+            <td>
                 {if $vo['state'] == 1}
                 <span>已发布</span>
                 {else}
@@ -53,7 +69,7 @@
             </td>
         </tr>
         <tr style="display: none;">
-            <td colspan="11">
+            <td colspan="13">
                 {echo \App\Psrphp\Ad\Model\Ad::renderItem($vo, $billboard)}
             </td>
         </tr>

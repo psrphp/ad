@@ -31,6 +31,8 @@ CREATE TABLE `prefix_psrphp_ad_item` (
     `max_click` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最大点击量',
     `starttime` datetime COMMENT '展现开始时间',
     `endtime` datetime COMMENT '展现结束时间',
+    `pc` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'pc展示',
+    `mobile` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'mobile展示',
     `state` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否发布',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='广告';

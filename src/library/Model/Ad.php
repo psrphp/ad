@@ -22,56 +22,63 @@ class Ad
             Db $db,
             Router $router,
         ) use ($name): string {
-            if ($billboard = $db->get('psrphp_ad_billboard', '*', [
+            if (!$billboard = $db->get('psrphp_ad_billboard', '*', [
                 'name' => $name,
             ])) {
-                if ($items = $db->rand('psrphp_ad_item', '*', [
-                    'billboard_id' => $billboard['id'],
-                    'state' => 1,
-                    'max_showtimes[>]' => Medoo::raw('showtimes'),
-                    'starttime[<]' => date('Y-m-d H:i:s'),
-                    'endtime[>]' => date('Y-m-d H:i:s'),
-                    'LIMIT' => 1,
-                ])) {
-                    $date = date('Y-m-d');
-                    $hour = date('H');
-                    $item = $items[0];
-                    $res = self::renderItem($item);
-                    if ($res != self::$errhtml) {
-                        $db->update('psrphp_ad_item', [
-                            'showtimes[+]' => 1,
-                        ], [
-                            'id' => $item['id'],
-                        ]);
-
-                        if ($db->get('psrphp_ad_show', '*', [
-                            'item_id' => $item['id'],
-                            'date' => $date,
-                            'hour' => $hour,
-                        ])) {
-                            $db->update('psrphp_ad_show', [
-                                'times[+]' => 1,
-                            ], [
-                                'item_id' => $item['id'],
-                                'date' => $date,
-                                'hour' => $hour,
-                            ]);
-                        } else {
-                            $db->insert('psrphp_ad_show', [
-                                'item_id' => $item['id'],
-                                'date' => $date,
-                                'hour' => $hour,
-                                'times' => 1,
-                            ]);
-                        }
-                    }
-                    return '<div onclick="var xmlhttp = new XMLHttpRequest();xmlhttp.open(\'post\', \'' . $router->build('/psrphp/ad/web/stat', ['id' => $item['id']]) . '\', true);xmlhttp.send();">' . $res . '</div>';
-                } else {
-                    return '';
-                }
-            } else {
                 return '<div style="border: 1px solid red;padding: 10px;color: red;">广告 <code>name:' . $name . '</code> 不存在，请在后台创建~</div>';
-            };
+            }
+
+            $where = [
+                'billboard_id' => $billboard['id'],
+                'state' => 1,
+                'max_showtimes[>]' => Medoo::raw('showtimes'),
+                'starttime[<]' => date('Y-m-d H:i:s'),
+                'endtime[>]' => date('Y-m-d H:i:s'),
+                'LIMIT' => 1,
+            ];
+            $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+            if (strpos($agent, 'iphone') || strpos($agent, 'android')) {
+                $where['mobile'] = 1;
+            } else {
+                $where['pc'] = 1;
+            }
+            if (!$items = $db->rand('psrphp_ad_item', '*', $where)) {
+                return '';
+            }
+
+            $date = date('Y-m-d');
+            $hour = date('H');
+            $item = $items[0];
+            $res = self::renderItem($item);
+            if ($res != self::$errhtml) {
+                $db->update('psrphp_ad_item', [
+                    'showtimes[+]' => 1,
+                ], [
+                    'id' => $item['id'],
+                ]);
+
+                if ($db->get('psrphp_ad_show', '*', [
+                    'item_id' => $item['id'],
+                    'date' => $date,
+                    'hour' => $hour,
+                ])) {
+                    $db->update('psrphp_ad_show', [
+                        'times[+]' => 1,
+                    ], [
+                        'item_id' => $item['id'],
+                        'date' => $date,
+                        'hour' => $hour,
+                    ]);
+                } else {
+                    $db->insert('psrphp_ad_show', [
+                        'item_id' => $item['id'],
+                        'date' => $date,
+                        'hour' => $hour,
+                        'times' => 1,
+                    ]);
+                }
+            }
+            return '<div onclick="var xmlhttp = new XMLHttpRequest();xmlhttp.open(\'post\', \'' . $router->build('/psrphp/ad/web/stat', ['id' => $item['id']]) . '\', true);xmlhttp.send();">' . $res . '</div>';
         });
     }
 

@@ -76,6 +76,14 @@ class Create extends Common
                         $res[] = (new Input('截止展示时间', 'endtime', date('Y-m-d H:i:s', time() + 86400 * 30)))
                             ->setType('datetime-local')
                             ->setHelp('在开始时间和截至时间之内的广告才会展示');
+                        $res[] = (new Radios('PC端显示'))->addRadio(
+                            new Radio('否', 'pc', '0', false),
+                            new Radio('是', 'pc', '1', true)
+                        );
+                        $res[] = (new Radios('移动端显示'))->addRadio(
+                            new Radio('否', 'mobile', '0', false),
+                            new Radio('是', 'mobile', '1', true)
+                        );
                         $res[] = (new Radios('是否发布'))->addRadio(
                             new Radio('否', 'state', '0', false),
                             new Radio('是', 'state', '1', true)
@@ -105,6 +113,8 @@ class Create extends Common
             'starttime' => $request->post('starttime'),
             'endtime' => $request->post('endtime'),
             'data' => json_encode($request->post('data', []), JSON_UNESCAPED_UNICODE),
+            'pc' => $request->post('pc'),
+            'mobile' => $request->post('mobile'),
             'state' => $request->post('state'),
         ]);
 

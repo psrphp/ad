@@ -74,6 +74,14 @@ class Update extends Common
                         $res[] = (new Input('截止展示时间', 'endtime', $item['endtime']))
                             ->setType('datetime-local')
                             ->setHelp('在开始时间和截至时间之内的广告才会展示');
+                        $res[] = (new Radios('pc端显示'))->addRadio(
+                            new Radio('否', 'pc', '0', $item['pc'] == 0),
+                            new Radio('是', 'pc', '1', $item['pc'] == 1)
+                        );
+                        $res[] = (new Radios('移动端显示'))->addRadio(
+                            new Radio('否', 'mobile', '0', $item['mobile'] == 0),
+                            new Radio('是', 'mobile', '1', $item['mobile'] == 1)
+                        );
                         $res[] = (new Radios('是否发布'))->addRadio(
                             new Radio('否', 'state', '0', $item['state'] == 0),
                             new Radio('是', 'state', '1', $item['state'] == 1)
@@ -100,6 +108,8 @@ class Update extends Common
             'max_click' => $request->post('max_click', 99999999),
             'starttime' => $request->post('starttime'),
             'endtime' => $request->post('endtime'),
+            'pc' => $request->post('pc'),
+            'mobile' => $request->post('mobile'),
             'state' => $request->post('state'),
         ], [
             'id' => $item['id'],
