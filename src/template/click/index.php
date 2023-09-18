@@ -12,14 +12,12 @@
             <th>ID</th>
             <th>广告ID</th>
             <th>访客IP</th>
-            <th>USER_AGENT</th>
-            <th>REFERER</th>
             <th>点击时间</th>
         </tr>
     </thead>
     <tbody>
         {foreach $clicks as $vo}
-        <tr>
+        <tr onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display=='table-row'?'none':'table-row'">
             <td>{$vo.id}</td>
             <td>
                 <span>id:{$vo['item_id']}</span>
@@ -28,9 +26,13 @@
                 {/if}
             </td>
             <td>{$vo.ip}</td>
-            <td>{$vo.user_agent}</td>
-            <td>{$vo.referer}</td>
             <td>{$vo.time}</td>
+        </tr>
+        <tr style="display: none;">
+            <td colspan="4">
+                <div>user_agent: <code>{$vo.user_agent}</code> </div>
+                <div>referer: <code>{$vo.referer}</code> </div>
+            </td>
         </tr>
         {/foreach}
     </tbody>
