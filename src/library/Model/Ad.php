@@ -36,7 +36,7 @@ class Ad
                 'endtime[>]' => date('Y-m-d H:i:s'),
                 'LIMIT' => 1,
             ];
-            $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+            $agent = strtolower($_SERVER['HTTP_USER_AGENT'] ?? '');
             if (strpos($agent, 'iphone') || strpos($agent, 'android')) {
                 $where['mobile'] = 1;
             } else {
